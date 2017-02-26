@@ -1,0 +1,12 @@
+# IDE
+.vscode
+
+# vendor modules
+node_modules
+
+# output
+.release
+.test
+
+# package
+.vsix

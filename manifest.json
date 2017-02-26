@@ -1,0 +1,105 @@
+{
+    "manifestVersion": 1,
+    "id": "gcloud-vsts-task",
+    "name": "Google Cloud Platform Integration",
+    "version": "0.1.43",
+    "publisher": "travis-kosarek",
+    "tags": [
+        "gcp",
+        "google cloud platform",
+        "google",
+        "gcloud",
+        "cloud"
+    ],
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
+    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "images/extension-icon.png"
+    },
+    "files": [{
+        "path": "src"
+    }],
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com"
+        },
+        "support": {
+            "uri": "https://github.com"
+        },
+        "repository": {
+            "uri": "https://github.com"
+        },
+        "issues": {
+            "uri": "https://github.com"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com"
+    },
+    "contributions": [{
+            "id": "gcloud-build-task",
+            "description": "description",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "src/docker"
+            }
+        },
+        {
+            "id": "gcloud-service-endpoint",
+            "description": "Service Account for authenticating with Google Cloud Platform CLI",
+            "type": "ms.vss-endpoint.service-endpoint-type",
+            "targets": ["ms.vss-endpoint.endpoint-types"],
+            "properties": {
+                "name": "gcp-service-account",
+                "displayName": "GCP Service Account",
+                "url": {
+                    "displayName": "Server Url",
+                    "helpText": "The Server Url is not needed at this time",
+                    "isVisible": "false",
+                    "value": "https://cloud.google.com"
+                },
+                "authenticationSchemes": [{
+                    "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+                    "inputDescriptors": [{
+                            "id": "username",
+                            "name": "Service Account Id",
+                            "description": "The ID of the service account setup in GCP",
+                            "inputMode": "textbox",
+                            "isConfidential": false,
+                            "validation": {
+                                "isRequired": true,
+                                "dataType": "string"
+                            }
+                        },
+                        {
+                            "id": "password",
+                            "name": "Key File Contents",
+                            "description": "The contents of the key file generated for this service account",
+                            "inputMode": "textarea",
+                            "isConfidential": true,
+                            "validation": {
+                                "isRequired": true,
+                                "dataType": "string"
+                            }
+                        }
+                    ]
+                }],
+                "helpMarkDown": "<a href=\"https://github.com\" target=\"_blank\"><b>More Information...</b></a>"
+            }
+        }
+    ]
+}

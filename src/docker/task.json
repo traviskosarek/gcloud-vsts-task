@@ -1,0 +1,97 @@
+{
+    "id": "f392e7dc-4041-483a-a16c-433ecef398e1",
+    "name": "gcloud-vsts-task",
+    "friendlyName": "Google Cloud Platform",
+    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "Travis Kosarek",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 41
+    },
+    "instanceNameFormat": "$(gcpDockerActionSelector)",
+    "inputs": [{
+            "name": "gcpDockerActionSelector",
+            "type": "pickList",
+            "label": "Action",
+            "required": false,
+            "helpMarkDown": "The Docker action to perform",
+            "defaultValue": "gcloud docker build",
+            "options": {
+                "gcloud docker build": "Build a Docker image",
+                "gcloud docker push": "Push a Docker image"
+            }
+        },
+        {
+            "name": "serviceAccountAuthentication",
+            "type": "connectedService:gcp-service-account",
+            "label": "GCP Service Account",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Select a service account to authenticate with when executing gcloud commands",
+            "visibleRule": "gcpDockerActionSelector = gcloud docker push"
+        },
+        {
+            "name": "dockerFilePath",
+            "type": "filePath",
+            "label": "Docker File Path",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Path to the Dockerfile to use. Must be within the Docker build context.",
+            "visibleRule": "gcpDockerActionSelector = gcloud docker build"
+        },
+        {
+            "name": "gcpContainerRegistry",
+            "type": "pickList",
+            "label": "Google Container Registry",
+            "required": false,
+            "helpMarkDown": "Name of the Google Container Registry to target",
+            "defaultValue": "GCPContainerRegistryGeneric",
+            "options": {
+                "GCPContainerRegistryGeneric": "gcr.io",
+                "GCPContainerRegistryUnitedStates": "us.gcr.io",
+                "GCPContainerRegistryAsia": "asia.gcr.io",
+                "GCPContainerRegistryEurope": "eu.gcr.io"
+            }
+        },
+        {
+            "name": "gcpDockerProjectName",
+            "type": "string",
+            "label": "GCP Project ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The project ID of the Google Cloud project this image will be pushed to"
+        },
+        {
+            "name": "gcpDockerImageName",
+            "type": "string",
+            "label": "Image Name",
+            "defaultValue": "$(Build.Repository.Name)",
+            "required": true,
+            "helpMarkDown": "Name of the Docker image to build"
+        },
+        {
+            "name": "gcpDockerImageTag",
+            "type": "string",
+            "label": "Tag",
+            "defaultValue": "$(Build.BuildId)",
+            "required": true,
+            "helpMarkDown": "The tag of the Docker image"
+        },
+        {
+            "name": "gcpDockerImageLatestTag",
+            "type": "boolean",
+            "label": "Include Latest Tag",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "If checked, the latest tag will be included on this image"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "docker-task.js"
+        }
+    }
+}
