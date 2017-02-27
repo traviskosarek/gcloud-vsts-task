@@ -55,7 +55,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "src/docker"
+                "name": ".release/docker"
             }
         },
         {
