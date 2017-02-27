@@ -18,16 +18,16 @@ gulp.task('pre-test', ['build-test'], function() {
 gulp.task('test', ['pre-test'], function() {
     return gulp.src(gulpConfig.test_output_source_tests)
         .pipe(mocha({
-            // reporter: 'spec',
-            reporter: 'mocha-junit-reporter',
+            reporter: 'spec',
+            // reporter: 'mocha-junit-reporter',
             reporterOptions: {
-                mochaFile: './commit-test-results.xml',
-                // mochaFile: gulpConfig.output_test_results_commit
+                mochaFile: gulpConfig.output_test_results_commit
             },
             timeout: '2000'
         }).on('error', gulpConfig.swallowError))
 
     .pipe(istanbul.writeReports({
-        dir: gulpConfig.output_test_coverage
+        dir: gulpConfig.output_test_coverage,
+        reporters: ['cobertura', 'text', 'text-summary']
     }));
 });

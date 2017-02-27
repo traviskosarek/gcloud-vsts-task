@@ -17,29 +17,7 @@ gulp.task('build', stream => {
     return stream;
 });
 
-gulp.task('build-for-production', stream => {
-    runSequence(
-        'clean-release',
-        'lint',
-        'transpile-no-sourcemaps',
-        'copy-other-files',
-        stream);
-    return stream;
-});
-
 gulp.task('transpile', function() {
-    var project = typescript.createProject(gulpConfig.tsconfig);
-    var tsResult = gulp.src(gulpConfig.transpile_source)
-        .pipe(sourceMaps.init())
-        .pipe(project())
-        .on('error', gulpConfig.swallowError);
-
-    return tsResult.js
-        .pipe(sourceMaps.write(gulpConfig.sourcemaps_output))
-        .pipe(gulp.dest(gulpConfig.release_output));
-});
-
-gulp.task('transpile-no-sourcemaps', function() {
     var project = typescript.createProject(gulpConfig.tsconfig);
     var tsResult = gulp.src(gulpConfig.transpile_source)
         .pipe(project())

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "gcloud-vsts-task",
     "name": "Google Cloud Platform Integration",
-    "version": "0.1.43",
+    "version": "0.1.51",
     "publisher": "travis-kosarek",
     "tags": [
         "gcp",
@@ -22,7 +22,7 @@
         "default": "images/extension-icon.png"
     },
     "files": [{
-        "path": "src"
+        "path": ".release"
     }],
     "content": {
         "details": {

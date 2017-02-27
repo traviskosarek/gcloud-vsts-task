@@ -9,4 +9,4 @@ node_modules
 .test
 
 # package
-.vsix
+*.vsix

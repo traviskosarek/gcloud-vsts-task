@@ -1,44 +1,44 @@
 {
-  "name": "gcloud-vsts-task",
-  "version": "0.1.41",
-  "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
-  "scripts": {
-    "build": "gulp build",
-    "clean": "gulp clean",
-    "package": "gulp build-for-production && tfx extension create --rev-version --manifest-globs manifest.json",
-    "test": "gulp test"
-  },
-  "author": "Travis Kosarek",
-  "license": "ISC",
-  "private": true,
-  "dependencies": {
-    "vsts-task-lib": "^1.1.0"
-  },
-  "devDependencies": {
-    "@types/chai": "^3.4.35",
-    "@types/core-js": "^0.9.35",
-    "@types/mocha": "^2.2.39",
-    "@types/node": "^7.0.5",
-    "@types/sinon": "^1.16.35",
-    "chai": "^3.5.0",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^4.0.1",
-    "gulp-tslint": "^7.1.0",
-    "gulp-typescript": "^3.1.5",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "mocha-junit-reporter": "^1.13.0",
-    "require-dir": "^0.3.1",
-    "run-sequence": "^1.2.2",
-    "sinon": "^1.17.7",
-    "tfx-cli": "^0.3.47",
-    "tslint": "^4.4.2",
-    "typescript": "^2.2.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://reapergrames.visualstudio.com/travis.kosarek/_git/gcloud-vsts-task"
-  }
+    "name": "gcloud-vsts-task",
+    "version": "0.1.41",
+    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "scripts": {
+        "build": "gulp build",
+        "clean": "gulp clean",
+        "package": "tfx extension create --rev-version --manifest-globs manifest.json",
+        "test": "gulp test"
+    },
+    "author": "Travis Kosarek",
+    "license": "ISC",
+    "private": true,
+    "dependencies": {
+        "vsts-task-lib": "^1.1.0"
+    },
+    "devDependencies": {
+        "@types/chai": "^3.4.35",
+        "@types/core-js": "^0.9.35",
+        "@types/mocha": "^2.2.39",
+        "@types/node": "^7.0.5",
+        "@types/sinon": "^1.16.35",
+        "chai": "^3.5.0",
+        "del": "^2.2.2",
+        "gulp": "^3.9.1",
+        "gulp-istanbul": "^1.1.1",
+        "gulp-mocha": "^4.0.1",
+        "gulp-tslint": "^7.1.0",
+        "gulp-typescript": "^3.1.5",
+        "istanbul": "^0.4.5",
+        "mocha": "^3.2.0",
+        "mocha-junit-reporter": "^1.13.0",
+        "require-dir": "^0.3.1",
+        "run-sequence": "^1.2.2",
+        "sinon": "^1.17.7",
+        "tfx-cli": "^0.3.47",
+        "tslint": "^4.4.2",
+        "typescript": "^2.2.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://reapergrames.visualstudio.com/travis.kosarek/_git/gcloud-vsts-task"
+    }
 }
