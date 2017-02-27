@@ -1,6 +1,6 @@
 {
     "name": "gcloud-vsts-task",
-    "version": "0.1.41",
+    "version": "0.1.0",
     "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
     "scripts": {
         "build": "gulp build",
