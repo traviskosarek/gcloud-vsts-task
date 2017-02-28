@@ -36,7 +36,9 @@
         "sinon": "^1.17.7",
         "tfx-cli": "^0.3.47",
         "tslint": "^4.4.2",
-        "typescript": "^2.2.1"
+        "typescript": "^2.2.1",
+        "webpack": "^2.2.1",
+        "webpack-stream": "^3.2.0"
     },
     "repository": {
         "type": "git",

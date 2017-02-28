@@ -4,7 +4,9 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var sourceMaps = require('gulp-sourcemaps');
 var typescript = require('gulp-typescript');
+var webpack = require('webpack-stream');
 
+var webpackConfig = require('./../webpack/webpack.config');
 var gulpConfig = require('./../gulp-config');
 
 gulp.task('build', stream => {
@@ -12,6 +14,7 @@ gulp.task('build', stream => {
         'clean-release',
         'lint',
         'transpile',
+        'bundle',
         'copy-other-files',
         stream);
     return stream;
@@ -25,6 +28,13 @@ gulp.task('transpile', function() {
 
     return tsResult.js
         .pipe(gulp.dest(gulpConfig.release_output));
+});
+
+gulp.task('bundle', function() {
+    return gulp.src(gulpConfig.bundle_entry_point)
+        .pipe(webpack(webpackConfig, require('webpack')))
+        .on('error', gulpConfig.swallowError)
+        .pipe(gulp.dest(webpackConfig.output.path));
 });
 
 gulp.task('copy-other-files', function() {

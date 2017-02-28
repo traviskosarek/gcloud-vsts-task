@@ -8,7 +8,7 @@ var commitTests = sourceRoot + '**/*' + testIdentifier + '.ts';
 var testOutputRoot = './.test/';
 var testOutputAllCode = testOutputRoot + '**/*.js';
 var testOutputAllTests = testOutputRoot + '**/*' + testIdentifier + '.js';
-var testOutputCoverage = testOutputRoot + './coverage/';
+var testOutputCoverage = testOutputRoot + './.coverage/';
 var testOutputCoverageCode = testOutputCoverage + '**/*.js';
 var releaseRoot = './.release/';
 var sourceMapsRoot = '../.test/.sourceMaps/';
@@ -46,9 +46,9 @@ module.exports = {
         '!' + testOutputCoverageCode,
         '!' + testOutputSourceMaps
     ],
-    output_test_results_commit: testOutputRoot + './results/' + 'commit-test-results.xml',
-    output_test_coverage: testOutputRoot + './coverage',
+    output_test_coverage: testOutputCoverage,
     tsconfig: tsconfigFile,
     swallowError: swallowError,
-    other_source_files: [sourceFiles, '!' + sourceCode]
+    other_source_files: [sourceFiles, '!' + sourceCode],
+    bundle_entry_point: releaseRoot
 };

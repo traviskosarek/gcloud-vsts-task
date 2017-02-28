@@ -22,15 +22,8 @@
         "default": "images/extension-icon.png"
     },
     "files": [{
-            "path": ".release"
-        },
-        {
-            "path": "node_modules"
-        },
-        {
-            "path": "package.json"
-        }
-    ],
+        "path": ".release"
+    }],
     "content": {
         "details": {
             "path": "OVERVIEW.md"

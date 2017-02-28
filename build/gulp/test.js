@@ -20,7 +20,7 @@ gulp.task('pre-test', ['build-test'], function() {
 gulp.task('test', ['pre-test'], function() {
     // cross platform method of setting reporter options for mocha-multi
     env.set({
-        multi: 'spec=- xunit=./.test/results/test-results.xml'
+        multi: 'spec=- xunit=./.test/.results/test-results.xml'
     });
     return gulp.src(gulpConfig.test_output_source_tests)
         .pipe(mocha({
