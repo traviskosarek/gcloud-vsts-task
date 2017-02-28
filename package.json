@@ -5,7 +5,7 @@
     "scripts": {
         "build": "gulp build",
         "clean": "gulp clean",
-        "package": "tfx extension create --rev-version --manifest-globs manifest.json",
+        "package": "tfx extension create --manifest-globs manifest.json",
         "test": "gulp test"
     },
     "author": "Travis Kosarek",
