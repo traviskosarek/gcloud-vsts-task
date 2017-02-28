@@ -1,1 +1,1 @@
-import 'vsts-task-lib';
+import 'vsts-task-lib/task';

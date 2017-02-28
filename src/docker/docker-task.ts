@@ -1,4 +1,4 @@
-import * as taskLib from 'vsts-task-lib';
+import * as taskLib from 'vsts-task-lib/task';
 
 export class DockerTask {
 
@@ -9,9 +9,9 @@ export class DockerTask {
     }
 
     public run() {
-        taskLib._writeLine('********************** start action **********************')
-        taskLib._writeLine(this.action);
-        taskLib._writeLine('**********************  end action  **********************');
+        taskLib.exec('echo', '********************** start action **********************');
+        taskLib.exec('echo', this.action);
+        taskLib.exec('echo', '**********************  end action  **********************');
         
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
@@ -27,6 +27,8 @@ export class DockerTask {
 
 let dockerTask = new DockerTask();
 dockerTask.run();
+
+console.log('************ running ************');
 
 // taskLib.debug('This message will show when debugging is enabled on the build/release.');
 // taskLib.error('Invalid inputs!');
