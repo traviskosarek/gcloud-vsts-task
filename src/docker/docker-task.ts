@@ -1,4 +1,4 @@
-import * as taskLib from '../../node_modules/vsts-task-lib';
+import * as taskLib from 'vsts-task-lib';
 
 export class DockerTask {
 
