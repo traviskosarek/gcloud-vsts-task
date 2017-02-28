@@ -9,7 +9,9 @@ export class DockerTask {
     }
 
     public run() {
+        console.log('********************** start action **********************');
         console.log(this.action);
+        console.log('**********************  end action  **********************');
         
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
