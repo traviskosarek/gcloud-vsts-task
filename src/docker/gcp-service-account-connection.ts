@@ -22,10 +22,6 @@ export class GCPServiceAccountConnection {
         return this._keyFileName;
     }
 
-    public get keyFile(): string {
-        return taskLib.cwd() + '/' + this.keyFileName;
-    }
-
     public constructor(connectionId: string) {
         this._keyFileName = connectionId + '.json';
 
@@ -63,28 +59,20 @@ export class GCPServiceAccountConnection {
     }
 
     private createAuthenticationFile() {
-
-        let fileOptions: taskLib.FsOptions = {
-            flag: 'w+'
-        };       
-
-        taskLib.writeFile(this.keyFile, this.keyFileContents, fileOptions);
+        taskLib.writeFile(this.keyFileName, this.keyFileContents);
     }
 
     private authenticate() {
-        if (taskLib.exist(this.keyFile)) {
+        if (taskLib.exist(this.keyFileName)) {
 
             // check if gcloud exists, if it does not an exception will be thrown
             taskLib.which('gcloud', true);
-
-            // taskLib.tool('ls').arg('-a').exec();
-            taskLib.tool('pwd').exec();
             
             let command = taskLib.tool('gcloud')
                 .arg('auth')
                 .arg('activate-service-account');
             command.arg(this.serviceAccountId);
-            command.arg('--key-file=' + this.keyFile);
+            command.arg('--key-file=' + this.keyFileName);
             command.exec();
         }
         else {
@@ -93,6 +81,6 @@ export class GCPServiceAccountConnection {
     }
 
     public closeConnection() {
-        taskLib.rmRF(this.keyFile);
+        taskLib.rmRF(this.keyFileName);
     }    
 }

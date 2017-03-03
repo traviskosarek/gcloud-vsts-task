@@ -24,7 +24,6 @@ export class DockerTask {
             case 'gcloud docker push':
                 this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
                 this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
-                // this.gcpServiceAccount.closeConnection();
                 break;
             default:
                 // todo: throw error    
@@ -52,6 +51,8 @@ export class DockerTask {
         // console.log('imageName: ' + this.imageName);
         // console.log('imageTag: ' + this.imageTag);
         // console.log('useLatestTag: ' + this.useLatestTag);
+
+        this.gcpServiceAccount.closeConnection();
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
