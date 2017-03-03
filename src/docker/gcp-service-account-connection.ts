@@ -29,15 +29,15 @@ export class GCPServiceAccountConnection {
             this._connectionParameters = this._connection.parameters;
             console.log('***** ' + JSON.stringify(this._connectionParameters));
             if (this._connection) {
-                if (this._connection[GCPServiceAccountConnectionFields.serviceAccountId]) {
-                    this._serviceAccountId = this._connection[GCPServiceAccountConnectionFields.serviceAccountId];
+                if (this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId]) {
+                    this._serviceAccountId = this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId];
                 }
                 else {
                     // todo: throw error
                 }
 
-                if (this._connection[GCPServiceAccountConnectionFields.keyFileContents]) {
-                    this._keyFileContents = this._connection[GCPServiceAccountConnectionFields.keyFileContents];
+                if (this._connectionParameters[GCPServiceAccountConnectionFields.keyFileContents]) {
+                    this._keyFileContents = this._connectionParameters[GCPServiceAccountConnectionFields.keyFileContents];
                 }
                 else {
                     // todo: throw error
