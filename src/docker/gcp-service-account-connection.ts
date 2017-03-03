@@ -83,6 +83,6 @@ export class GCPServiceAccountConnection {
     }
 
     public closeConnection() {
-        taskLib.rmRF(this.keyFileName);
+        // taskLib.rmRF(this.keyFileName);
     }    
 }
