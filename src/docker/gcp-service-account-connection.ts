@@ -57,14 +57,10 @@ export class GCPServiceAccountConnection {
     }
 
     public createAuthenticationFile() {
-        console.log('* does file exist: ' + taskLib.exist(this._keyFileName));
         taskLib.writeFile(this._keyFileName, this.keyFileContents());
-        console.log('** does file exist: ' + taskLib.exist(this._keyFileName));
     }
 
     public deleteAuthenticationFile() {
-        console.log('*** does file exist: ' + taskLib.exist(this._keyFileName));
         taskLib.rmRF(this._keyFileName);
-        console.log('**** does file exist: ' + taskLib.exist(this._keyFileName));
     }    
 }
