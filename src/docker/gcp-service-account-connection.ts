@@ -77,8 +77,8 @@ export class GCPServiceAccountConnection {
             // check if gcloud exists, if it does not an exception will be thrown
             taskLib.which('gcloud', true);
 
-            taskLib.tool('ls').arg('-a').exec();
-            taskLib.tool('whoami').exec();
+            // taskLib.tool('ls').arg('-a').exec();
+            taskLib.tool('pwd').exec();
             
             let command = taskLib.tool('gcloud')
                 .arg('auth')
