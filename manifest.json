@@ -14,7 +14,7 @@
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
     }],
-    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "description": "A simple utility facilitating actions with Google Cloud Platform through the gcloud CLI",
     "categories": [
         "Build and release"
     ],

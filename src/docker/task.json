@@ -2,7 +2,7 @@
     "id": "f392e7dc-4041-483a-a16c-433ecef398e1",
     "name": "gcloud-vsts-task",
     "friendlyName": "Google Cloud Platform",
-    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "description": "A simple utility facilitating actions with Google Cloud Platform through the gcloud CLI",
     "helpMarkDown": "",
     "category": "Utility",
     "author": "Travis Kosarek",

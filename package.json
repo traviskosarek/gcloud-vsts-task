@@ -1,7 +1,7 @@
 {
     "name": "gcloud-vsts-task",
     "version": "0.1.0",
-    "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
+    "description": "A simple utility facilitating actions with Google Cloud Platform through the gcloud CLI",
     "scripts": {
         "start-docker-task": "node .release/docker/docker-task.js",
         "build": "gulp build",
