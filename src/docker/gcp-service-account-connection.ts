@@ -34,7 +34,7 @@ export class GCPServiceAccountConnection {
                 }
 
                 if (this._connection[GCPServiceAccountConnectionFields.keyFileContents]) {
-                    this._keyFileContents = this._connection[GCPServiceAccountConnectionFields.keyFileContents]];
+                    this._keyFileContents = this._connection[GCPServiceAccountConnectionFields.keyFileContents];
                 }
                 else {
                     // todo: throw error
