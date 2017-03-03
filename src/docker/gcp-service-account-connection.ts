@@ -25,9 +25,9 @@ export class GCPServiceAccountConnection {
         if (connectionId) {
             console.log('***** ' + connectionId);
             this._connection = taskLib.getEndpointAuthorization(connectionId, true);
-            console.log('***** ' + this._connection);
+            console.log('***** ' + JSON.stringify(this._connection));
             this._connectionParameters = this._connection.parameters;
-            console.log('***** ' + this._connectionParameters);
+            console.log('***** ' + JSON.stringify(this._connectionParameters));
             if (this._connection) {
                 if (this._connection[GCPServiceAccountConnectionFields.serviceAccountId]) {
                     this._serviceAccountId = this._connection[GCPServiceAccountConnectionFields.serviceAccountId];
