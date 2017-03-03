@@ -1,6 +1,7 @@
 import * as taskLib from 'vsts-task-lib';
 
 import { GCPServiceAccountConnection } from './gcp-service-account-connection';
+import { DockerTaskActions } from './docker-task-actions';
 
 export class DockerTask {
 
@@ -18,10 +19,10 @@ export class DockerTask {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
 
         switch (this.action) {
-            case 'gcloud docker build':
+            case DockerTaskActions.build:
                 this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
                 break;
-            case 'gcloud docker push':
+            case DockerTaskActions.push:
                 this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
                 this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
                 break;
@@ -52,6 +53,16 @@ export class DockerTask {
         // console.log('imageTag: ' + this.imageTag);
         // console.log('useLatestTag: ' + this.useLatestTag);
 
+
+        switch (this.action) {
+            case DockerTaskActions.build:
+                break;
+            case DockerTaskActions.push:
+                this.gcpServiceAccount.closeConnection();
+                break;
+            default:
+                // todo: throw error    
+        }        
         this.gcpServiceAccount.closeConnection();
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
