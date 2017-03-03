@@ -17,19 +17,6 @@ export class DockerTask {
 
     public constructor() {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
-
-        switch (this.action) {
-            case DockerTaskActions.build:
-                this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
-                break;
-            case DockerTaskActions.push:
-                this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
-                this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
-                break;
-            default:
-                // todo: throw error    
-        }
-
         this.googleContainerRegistry = taskLib.getInput('gcpContainerRegistry', true);
         this.gcpProjectId = taskLib.getInput('gcpDockerProjectName', true);
         this.imageName = taskLib.getInput('gcpDockerImageName', true);
@@ -54,7 +41,20 @@ export class DockerTask {
         // console.log('useLatestTag: ' + this.useLatestTag);
 
         try {
-            taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
+            switch (this.action) {
+                case DockerTaskActions.build:
+                    this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
+                    taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.build + '\'');
+                    break;
+                case DockerTaskActions.push:
+                    this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
+                    this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
+                    taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.push + '\'');
+                    break;
+                default:
+                    taskLib.setResult(taskLib.TaskResult.Failed, 'Invalid Docker action set: ' + this.action);
+                    return;
+            }
         }
         catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -65,14 +65,19 @@ export class DockerTask {
     }
 
     private onComplete() {
-        switch (this.action) {
-            case DockerTaskActions.build:
-                break;
-            case DockerTaskActions.push:
-                this.gcpServiceAccount.closeConnection();
-                break;
-            default:
-                // todo: throw error    
+        try {
+            switch (this.action) {
+                case DockerTaskActions.build:
+                    break;
+                case DockerTaskActions.push:
+                    this.gcpServiceAccount.closeConnection();
+                    break;
+                default:
+                    taskLib.setResult(taskLib.TaskResult.Failed, 'Invalid Docker action set: ' + this.action);  
+            }    
+        }
+        catch (e) {
+            taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 }

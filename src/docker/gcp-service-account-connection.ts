@@ -39,22 +39,22 @@ export class GCPServiceAccountConnection {
                     this._serviceAccountId = this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId];
                 }
                 else {
-                    // todo: throw error
+                    taskLib.setResult(taskLib.TaskResult.Failed, 'Unable to resolve connection parameter \'Service Account Id\'');  
                 }
 
                 if (this._connectionParameters[GCPServiceAccountConnectionFields.keyFileContents]) {
                     this._keyFileContents = this._connectionParameters[GCPServiceAccountConnectionFields.keyFileContents];
                 }
                 else {
-                    // todo: throw error
+                    taskLib.setResult(taskLib.TaskResult.Failed, 'Unable to resolve connection parameter \'Key File Contents\'');  
                 }
             }
             else {
-                // todo: throw error
+                taskLib.setResult(taskLib.TaskResult.Failed, 'Unable to resolve service endpoint connection for GCP Service Account');  
             }
         }
         else {
-            // todo: throw error
+            taskLib.setResult(taskLib.TaskResult.Failed, 'Unable to resolve service endpoint connection for GCP Service Account');  
         }
     }
 
@@ -76,17 +76,13 @@ export class GCPServiceAccountConnection {
             command.execSync();
         }
         else {
-            // todo: throw error
+            taskLib.setResult(taskLib.TaskResult.Failed, 'Key File \'' + this.keyFileName + '\' was unable to be generated');  
         }
     }
 
     public closeConnection() {
         if (taskLib.exist(this.keyFileName)) {
             taskLib.rmRF(this.keyFileName);
-        }
-        else {
-            console.log('closeConnection else');
-            // todo: throw error
         }
     }    
 }
