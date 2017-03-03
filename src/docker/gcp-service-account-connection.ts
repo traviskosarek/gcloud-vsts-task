@@ -73,7 +73,7 @@ export class GCPServiceAccountConnection {
                 .arg('activate-service-account');
             command.arg(this.serviceAccountId);
             command.arg('--key-file=' + this.keyFileName);
-            command.exec();
+            command.execSync();
         }
         else {
             // todo: throw error
