@@ -57,6 +57,9 @@ export class GCPServiceAccountConnection {
     }
 
     public createAuthenticationFile() {
+        console.log('file name: ' + this._keyFileName);
+        console.log('file contents: ' + this.keyFileContents());
+
         taskLib.writeFile(this._keyFileName, this.keyFileContents());
         
         taskLib.tool('cat').arg(this._keyFileName).exec();
