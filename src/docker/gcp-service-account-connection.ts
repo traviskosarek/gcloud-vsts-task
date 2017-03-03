@@ -28,7 +28,7 @@ export class GCPServiceAccountConnection {
             console.log('***** ' + JSON.stringify(this._connection));
             this._connectionParameters = this._connection.parameters;
             console.log('***** ' + JSON.stringify(this._connectionParameters));
-            console.log('**** test email **** test@email.com');
+            console.log('**** test email **** vsts-agent@travis-hikes.iam.gserviceaccount.com');
             if (this._connection) {
                 if (this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId]) {
                     this._serviceAccountId = this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId];
