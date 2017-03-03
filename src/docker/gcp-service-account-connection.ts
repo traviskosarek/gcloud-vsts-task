@@ -85,6 +85,7 @@ export class GCPServiceAccountConnection {
             taskLib.rmRF(this.keyFileName);
         }
         else {
+            taskLib.tool('ls').arg('-A').exec();
             // todo: throw error
         }
     }    
