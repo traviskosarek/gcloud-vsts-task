@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "A simple utility facilitating actions with Google Cloud Platofrm through the gcloud CLI",
     "scripts": {
+        "start-docker-task": "node .release/docker/docker-task.js",
         "build": "gulp build",
         "clean": "gulp clean",
         "package": "tfx extension create --manifest-globs manifest.json",
