@@ -41,9 +41,9 @@ export class DockerTask {
         console.log('gcpServiceAccountId: ' + this.gcpServiceAccountId);
 
         if (this.gcpServiceAccount) {
-            console.log('gcpServiceAccount.serviceAccountId: ' + this.gcpServiceAccount.serviceAccountId());
+            console.log('gcpServiceAccount.serviceAccountId: <((' + this.gcpServiceAccount.serviceAccountId() + '>');
             console.log('gcpServiceAccount.keyFileContents: ' + this.gcpServiceAccount.keyFileContents());
-        }    
+        }
         
         console.log('dockerFilePath: ' + this.dockerFilePath);
         console.log('googleContainerRegistry: ' + this.googleContainerRegistry);
