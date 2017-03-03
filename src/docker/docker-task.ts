@@ -52,7 +52,7 @@ export class DockerTask {
         // console.log('imageTag: ' + this.imageTag);
         // console.log('useLatestTag: ' + this.useLatestTag);
 
-        this.gcpServiceAccount.closeConnection();
+        // this.gcpServiceAccount.closeConnection();
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
