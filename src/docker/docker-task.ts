@@ -13,7 +13,7 @@ export class DockerTask {
 
     public constructor() {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
-        this.gcpServiceAccount = taskLib.getInput('serviceAccountAuthentication', true);
+        this.gcpServiceAccount = taskLib.getInput('serviceAccountAuthentication', false);
         this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
         this.googleContainerRegistry = taskLib.getInput('gcpContainerRegistry', true);
         this.gcpProjectId = taskLib.getInput('gcpDockerProjectName', true);
