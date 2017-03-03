@@ -59,11 +59,17 @@ export class GCPServiceAccountConnection {
     }
 
     private createAuthenticationFile() {
-        taskLib.writeFile(this._keyFileName, this.keyFileContents);
+        taskLib.writeFile(this.keyFileName, this.keyFileContents);
     }
 
     private authenticate() {
-        if (taskLib.exist(this._keyFileName)) {
+        if (taskLib.exist(this.keyFileName)) {
+
+            // check if gcloud exists, if it does not an exception will be thrown
+            taskLib.which('gcloud', true);
+
+            taskLib.ls('-a', ['.']);
+
             let command = taskLib.tool('gcloud')
                 .arg('auth')
                 .arg('activate-service-account');
@@ -77,6 +83,6 @@ export class GCPServiceAccountConnection {
     }
 
     public closeConnection() {
-        taskLib.rmRF(this._keyFileName);
+        taskLib.rmRF(this.keyFileName);
     }    
 }
