@@ -81,6 +81,11 @@ export class GCPServiceAccountConnection {
     }
 
     public closeConnection() {
-        taskLib.rmRF(this.keyFileName);
+        if (taskLib.exist(this.keyFileName)) {
+            taskLib.rmRF(this.keyFileName);
+        }
+        else {
+            // todo: throw error
+        }
     }    
 }
