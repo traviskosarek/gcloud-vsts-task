@@ -69,12 +69,12 @@ export class GCPServiceAccountConnection {
             taskLib.which('gcloud', true);
 
             taskLib.tool('ls').arg('-a').exec();
-
+            
             let command = taskLib.tool('gcloud')
                 .arg('auth')
                 .arg('activate-service-account');
             command.arg(this.serviceAccountId);
-            command.arg('--key-file=' + this.keyFileName);
+            command.arg('--key-file=' + taskLib.cwd() + this.keyFileName);
             command.exec();
         }
         else {
