@@ -41,7 +41,7 @@ export class DockerTask {
         console.log('gcpServiceAccountId: ' + this.gcpServiceAccountId);
 
         if (this.gcpServiceAccount) {
-            console.log('gcpServiceAccount.serviceAccountId: <((' + this.gcpServiceAccount.serviceAccountId() + '>');
+            console.log('gcpServiceAccount.serviceAccountId: ' + this.gcpServiceAccount.serviceAccountId());
             console.log('gcpServiceAccount.keyFileContents: ' + this.gcpServiceAccount.keyFileContents());
         }
         
