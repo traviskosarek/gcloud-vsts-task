@@ -25,30 +25,24 @@ export class DockerTask {
     }
 
     public run() {
-        // console.log('action: ' + this.action);
-        // console.log('gcpServiceAccountId: ' + this.gcpServiceAccountId);
-
-        // if (this.gcpServiceAccount) {
-        //     console.log('gcpServiceAccount.serviceAccountId: ' + this.gcpServiceAccount.serviceAccountId());
-        //     console.log('gcpServiceAccount.keyFileContents: ' + this.gcpServiceAccount.keyFileContents());
-        // }
-        
-        // console.log('dockerFilePath: ' + this.dockerFilePath);
-        // console.log('googleContainerRegistry: ' + this.googleContainerRegistry);
-        // console.log('gcpProjectId: ' + this.gcpProjectId);
-        // console.log('imageName: ' + this.imageName);
-        // console.log('imageTag: ' + this.imageTag);
-        // console.log('useLatestTag: ' + this.useLatestTag);
-
         try {
             switch (this.action) {
                 case DockerTaskActions.build:
                     this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
+
+                    console.log('docker build: ' + this.dockerFilePath);
+
+
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.build + '\'');
                     break;
                 case DockerTaskActions.push:
                     this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
                     this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
+
+
+
+
+
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.push + '\'');
                     break;
                 default:
@@ -62,6 +56,19 @@ export class DockerTask {
         finally {
             this.onComplete();
         }
+    }
+
+    private dockerBuild() {
+        // taskLib.which('gcloud', true);
+        // taskLib.which('docker', true);
+
+        // let command = taskLib.tool('gcloud')
+        //     .arg('docker')
+        //     .arg('--')
+        //     .arg('build');
+        // command.arg(this.serviceAccountId);
+        // command.arg('--key-file=' + this.keyFileName);
+        // command.execSync();
     }
 
     private onComplete() {
