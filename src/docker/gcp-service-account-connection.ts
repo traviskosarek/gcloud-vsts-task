@@ -83,7 +83,7 @@ export class GCPServiceAccountConnection {
                 .arg('auth')
                 .arg('activate-service-account');
             command.arg(this.serviceAccountId);
-            command.arg('--key-file=key.json'); // + this.keyFile);
+            command.arg('--key-file=' + this.keyFile);
             command.exec();
         }
         else {
