@@ -63,7 +63,12 @@ export class GCPServiceAccountConnection {
     }
 
     private createAuthenticationFile() {
-        taskLib.writeFile(this.keyFile, this.keyFileContents);
+
+        let fileOptions: taskLib.FsOptions = {
+            flag: 'w+'
+        };       
+
+        taskLib.writeFile(this.keyFile, this.keyFileContents, fileOptions);
     }
 
     private authenticate() {
