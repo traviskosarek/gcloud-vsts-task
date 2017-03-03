@@ -24,8 +24,7 @@ export class DockerTask {
             case 'gcloud docker push':
                 this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
                 this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
-                this.gcpServiceAccount.createAuthenticationFile();
-                this.gcpServiceAccount.deleteAuthenticationFile();
+                this.gcpServiceAccount.closeConnection();
                 break;
             default:
                 // todo: throw error    

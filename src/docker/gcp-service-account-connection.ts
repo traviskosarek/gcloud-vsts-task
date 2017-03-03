@@ -10,22 +10,24 @@ export class GCPServiceAccountConnection {
     private _connectionParameters: { [key: string]: string };
     private _keyFileName: string;
 
-    public serviceAccountId(): string {
+    public get serviceAccountId(): string {
         return this._serviceAccountId;
     }
 
-    public keyFileContents(): string {
+    public get keyFileContents(): string {
         return this._keyFileContents;
     }
 
-    public keyFileName(): string {
+    public get keyFileName(): string {
         return this._keyFileName;
     }
 
     public constructor(connectionId: string) {
         this._keyFileName = connectionId + '.json';
 
-        this.setConnectionDetails(connectionId);        
+        this.setConnectionDetails(connectionId);
+        this.createAuthenticationFile();
+        this.authenticate();
     }
 
     private setConnectionDetails(connectionId: string) {
@@ -56,11 +58,25 @@ export class GCPServiceAccountConnection {
         }
     }
 
-    public createAuthenticationFile() {
-        taskLib.writeFile(this._keyFileName, this.keyFileContents());
+    private createAuthenticationFile() {
+        taskLib.writeFile(this._keyFileName, this.keyFileContents);
     }
 
-    public deleteAuthenticationFile() {
+    private authenticate() {
+        if (taskLib.exist(this._keyFileName)) {
+            let command = taskLib.tool('gcloud')
+                .arg('auth')
+                .arg('activate-service-account');
+            command.arg(this.serviceAccountId);
+            command.arg('--key-file=' + this.keyFileName);
+            command.exec();
+        }
+        else {
+            // todo: throw error
+        }
+    }
+
+    public closeConnection() {
         taskLib.rmRF(this._keyFileName);
     }    
 }
