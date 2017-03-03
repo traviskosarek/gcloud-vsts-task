@@ -8,6 +8,7 @@ export class GCPServiceAccountConnection {
     private _keyFileContents: string;
     private _connection: taskLib.EndpointAuthorization;
     private _connectionParameters: { [key: string]: string };
+    private _keyFileName: string;
 
     public serviceAccountId(): string {
         return this._serviceAccountId;
@@ -17,18 +18,20 @@ export class GCPServiceAccountConnection {
         return this._keyFileContents;
     }
 
+    public keyFileName(): string {
+        return this._keyFileName;
+    }
+
     public constructor(connectionId: string) {
+        this._keyFileName = connectionId + '.json';
+
         this.setConnectionDetails(connectionId);        
     }
 
     private setConnectionDetails(connectionId: string) {
         if (connectionId) {
-            console.log('***** ' + connectionId);
             this._connection = taskLib.getEndpointAuthorization(connectionId, true);
-            console.log('***** ' + JSON.stringify(this._connection));
             this._connectionParameters = this._connection.parameters;
-            console.log('***** ' + JSON.stringify(this._connectionParameters));
-            console.log('**** test email **** vsts-agent@travis-hikes.iam.gserviceaccount.com');
             if (this._connection) {
                 if (this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId]) {
                     this._serviceAccountId = this._connectionParameters[GCPServiceAccountConnectionFields.serviceAccountId];
@@ -54,10 +57,10 @@ export class GCPServiceAccountConnection {
     }
 
     public createAuthenticationFile() {
-        // todo
+        taskLib.writeFile(this._keyFileName, this.keyFileContents());
     }
 
     public deleteAuthenticationFile() {
-        // todo
+        taskLib.rmRF(this._keyFileName);
     }    
 }
