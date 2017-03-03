@@ -52,7 +52,19 @@ export class DockerTask {
         // console.log('imageName: ' + this.imageName);
         // console.log('imageTag: ' + this.imageTag);
         // console.log('useLatestTag: ' + this.useLatestTag);
-            
+
+        try {
+            taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
+        }
+        catch (e) {
+            taskLib.setResult(taskLib.TaskResult.Failed, e);
+        }
+        finally {
+            this.onComplete();
+        }
+    }
+
+    private onComplete() {
         switch (this.action) {
             case DockerTaskActions.build:
                 break;
@@ -62,8 +74,6 @@ export class DockerTask {
             default:
                 // todo: throw error    
         }
-
-        taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
 }
 
