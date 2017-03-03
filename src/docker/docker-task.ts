@@ -54,6 +54,8 @@ export class DockerTask {
         // console.log('useLatestTag: ' + this.useLatestTag);
 
 
+        taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
+
         switch (this.action) {
             case DockerTaskActions.build:
                 break;
@@ -63,8 +65,6 @@ export class DockerTask {
             default:
                 // todo: throw error    
         }        
-
-        taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
 }
 
