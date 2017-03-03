@@ -1,4 +1,4 @@
-import * as taskLib from 'vsts-task-lib/task';
+import * as taskLib from 'vsts-task-lib';
 
 import { GCPServiceAccountConnection } from './gcp-service-account-connection';
 
