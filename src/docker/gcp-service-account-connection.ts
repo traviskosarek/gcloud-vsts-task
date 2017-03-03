@@ -74,7 +74,7 @@ export class GCPServiceAccountConnection {
                 .arg('auth')
                 .arg('activate-service-account');
             command.arg(this.serviceAccountId);
-            command.arg('--key-file=' + taskLib.cwd() + this.keyFileName);
+            command.arg('--key-file=' + taskLib.cwd() + '/' + this.keyFileName);
             command.exec();
         }
         else {
