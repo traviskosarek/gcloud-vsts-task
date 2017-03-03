@@ -78,7 +78,7 @@ export class GCPServiceAccountConnection {
             taskLib.which('gcloud', true);
 
             taskLib.tool('ls').arg('-a').exec();
-            taskLib.tool('whereis').arg('gcloud').exec();
+            taskLib.tool('whoami').exec();
             
             let command = taskLib.tool('gcloud')
                 .arg('auth')
