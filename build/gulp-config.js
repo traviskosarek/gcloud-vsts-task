@@ -4,7 +4,7 @@ var sourceRoot = './src/';
 var sourceFiles = sourceRoot + '**/*.*';
 var sourceCode = sourceRoot + '**/*.ts';
 var testIdentifier = '.spec';
-var commitTests = sourceRoot + '**/*' + testIdentifier + '.ts';
+var tests = sourceRoot + '**/*' + testIdentifier + '.ts';
 var testOutputRoot = './.test/';
 var testOutputAllCode = testOutputRoot + '**/*.js';
 var testOutputAllTests = testOutputRoot + '**/*' + testIdentifier + '.js';
@@ -30,10 +30,10 @@ module.exports = {
     code_source: sourceCode,
     transpile_source: [
         sourceCode,
-        '!' + commitTests
+        '!' + tests
     ],
-    transpile_commit_tests: [
-        commitTests
+    transpile_tests: [
+        tests
     ],
     test_output_source: [
         testOutputAllCode,

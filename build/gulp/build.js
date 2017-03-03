@@ -11,7 +11,7 @@ var gulpConfig = require('./../gulp-config');
 
 gulp.task('build', stream => {
     runSequence(
-        'clean-release',
+        'clean',
         'lint',
         'transpile',
         'bundle',
@@ -27,7 +27,7 @@ gulp.task('transpile', function() {
         .on('error', gulpConfig.swallowError);
 
     return tsResult.js
-        .pipe(gulp.dest(gulpConfig.release_output));
+        .pipe(gulp.dest(gulpConfig.test_output));
 });
 
 gulp.task('bundle', function() {
@@ -46,13 +46,13 @@ gulp.task('copy-other-files', function() {
 gulp.task('build-test', stream => {
     runSequence(
         'clean-test',
-        'transpile-source-test',
-        'transpile-commit-tests',
+        'transpile-sourcemaps',
+        'transpile-tests',
         stream);
     return stream;
 });
 
-gulp.task('transpile-source-test', function() {
+gulp.task('transpile-sourcemaps', function() {
     var project = typescript.createProject(gulpConfig.tsconfig, { removeComments: false });
     var tsResult = gulp.src(gulpConfig.transpile_source)
         .pipe(sourceMaps.init())
@@ -64,9 +64,9 @@ gulp.task('transpile-source-test', function() {
         .pipe(gulp.dest(gulpConfig.test_output));
 });
 
-gulp.task('transpile-commit-tests', function() {
+gulp.task('transpile-tests', function() {
     var project = typescript.createProject(gulpConfig.tsconfig);
-    var tsResult = gulp.src(gulpConfig.transpile_commit_tests)
+    var tsResult = gulp.src(gulpConfig.transpile_tests)
         .pipe(sourceMaps.init())
         .pipe(project())
         .on('error', gulpConfig.swallowError);

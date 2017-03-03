@@ -5,7 +5,7 @@ var helpers = require('./helpers');
 
 module.exports = {
     entry: {
-        'docker/docker-task': './.release/docker/docker-task.js'
+        'docker/docker-task': './.test/docker/docker-task.js'
     },
 
     target: 'node',
