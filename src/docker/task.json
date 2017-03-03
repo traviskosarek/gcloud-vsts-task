@@ -57,7 +57,7 @@
             }
         },
         {
-            "name": "gcpDockerProjectName",
+            "name": "gcpDockerProjectId",
             "type": "string",
             "label": "GCP Project ID",
             "defaultValue": "",
