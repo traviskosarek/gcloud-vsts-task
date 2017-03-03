@@ -53,18 +53,22 @@ export class DockerTask {
         // console.log('imageTag: ' + this.imageTag);
         // console.log('useLatestTag: ' + this.useLatestTag);
 
+        let task = new Promise((resolve, reject) => {
+            // todo: task stuff
+            resolve();
+        }).then(() => {
+            switch (this.action) {
+                case DockerTaskActions.build:
+                    break;
+                case DockerTaskActions.push:
+                    this.gcpServiceAccount.closeConnection();
+                    break;
+                default:
+                    // todo: throw error    
+            }   
 
-        taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
-
-        switch (this.action) {
-            case DockerTaskActions.build:
-                break;
-            case DockerTaskActions.push:
-                this.gcpServiceAccount.closeConnection();
-                break;
-            default:
-                // todo: throw error    
-        }        
+            taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
+        });     
     }
 }
 
