@@ -39,10 +39,12 @@ export class DockerTask {
     public run() {
         console.log('action: ' + this.action);
         console.log('gcpServiceAccountId: ' + this.gcpServiceAccountId);
+
         if (this.gcpServiceAccount) {
             console.log('gcpServiceAccount.serviceAccountId: ' + this.gcpServiceAccount.serviceAccountId());
             console.log('gcpServiceAccount.keyFileContents: ' + this.gcpServiceAccount.keyFileContents());
         }    
+        
         console.log('dockerFilePath: ' + this.dockerFilePath);
         console.log('googleContainerRegistry: ' + this.googleContainerRegistry);
         console.log('gcpProjectId: ' + this.gcpProjectId);
