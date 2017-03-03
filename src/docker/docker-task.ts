@@ -30,7 +30,9 @@ export class DockerTask {
                 case DockerTaskActions.build:
                     this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
 
-                    console.log('docker build: ' + this.dockerFilePath);
+                    let dockerPath = this.dockerFilePath.replace('Dockerfile', '');
+                    console.log('docker build path: ' + dockerPath);
+                    console.log(this.googleContainerRegistry + '/' + this.gcpProjectId + '/' + this.imageName + ':' + this.imageTag);
 
 
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.build + '\'');
