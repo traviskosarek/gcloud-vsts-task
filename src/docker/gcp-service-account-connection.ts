@@ -62,13 +62,17 @@ export class GCPServiceAccountConnection {
         taskLib.writeFile(this._keyFileName, this.keyFileContents());
         console.log('***** after create *****');
         taskLib.ls('', []);
+        
+        console.log('***** file contents *****');
+        taskLib.tool('cat').arg(this._keyFileName).exec();
+        console.log('***** file contents *****');
     }
 
     public deleteAuthenticationFile() {
-        console.log('***** before create *****');
+        console.log('***** before delete *****');
         taskLib.ls('', []);
         taskLib.rmRF(this._keyFileName);
-        console.log('***** after create *****');
+        console.log('***** after delete *****');
         taskLib.ls('', []);
     }    
 }
