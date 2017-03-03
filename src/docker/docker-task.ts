@@ -1,9 +1,12 @@
 import * as taskLib from 'vsts-task-lib/task';
 
+import { GCPServiceAccountConnection } from './gcp-service-account-connection';
+
 export class DockerTask {
 
     private action: string;
-    private gcpServiceAccount: string;
+    private gcpServiceAccountId: string;
+    private gcpServiceAccount: GCPServiceAccountConnection;
     private dockerFilePath: string;
     private googleContainerRegistry: string;
     private gcpProjectId: string;
@@ -13,8 +16,19 @@ export class DockerTask {
 
     public constructor() {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
-        this.gcpServiceAccount = taskLib.getInput('serviceAccountAuthentication', false);
-        this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
+
+        switch (this.action) {
+            case 'gcloud docker build':
+                this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
+                break;
+            case 'gcloud docker push':
+                this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
+                this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
+                break;
+            default:
+                // todo: throw error    
+        }
+
         this.googleContainerRegistry = taskLib.getInput('gcpContainerRegistry', true);
         this.gcpProjectId = taskLib.getInput('gcpDockerProjectName', true);
         this.imageName = taskLib.getInput('gcpDockerImageName', true);
@@ -23,7 +37,11 @@ export class DockerTask {
     }
     public run() {
         console.log('action: ' + this.action);
-        console.log('gcpServiceAccount: ' + this.gcpServiceAccount);
+        console.log('gcpServiceAccountId: ' + this.gcpServiceAccountId);
+        if (this.gcpServiceAccount) {
+            console.log('gcpServiceAccount.serviceAccountId: ' + this.gcpServiceAccount.serviceAccountId);
+            console.log('gcpServiceAccount.keyFilContents: ' + this.gcpServiceAccount.keyFileContents);
+        }    
         console.log('dockerFilePath: ' + this.dockerFilePath);
         console.log('googleContainerRegistry: ' + this.googleContainerRegistry);
         console.log('gcpProjectId: ' + this.gcpProjectId);
@@ -33,14 +51,6 @@ export class DockerTask {
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
-
-    private createAuthenticationFile() {
-        // todo
-    }
-
-    private deleteAuthenticationFile() {
-        // todo
-    }    
 }
 
 let dockerTask = new DockerTask();
