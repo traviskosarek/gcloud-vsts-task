@@ -55,8 +55,12 @@ export class DockerTask {
 
         let task = new Promise((resolve, reject) => {
             // todo: task stuff
+            console.log('********* AAAAAAAAAAAA ************');
+            taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
             resolve();
         }).then(() => {
+            
+            console.log('********* BBBBBBBBBBBB ************');
             switch (this.action) {
                 case DockerTaskActions.build:
                     break;
@@ -66,9 +70,7 @@ export class DockerTask {
                 default:
                     // todo: throw error    
             }   
-
-            taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
-        });     
+        });
     }
 }
 
