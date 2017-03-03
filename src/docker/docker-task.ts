@@ -63,7 +63,6 @@ export class DockerTask {
             default:
                 // todo: throw error    
         }        
-        this.gcpServiceAccount.closeConnection();
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success Message!');
     }
