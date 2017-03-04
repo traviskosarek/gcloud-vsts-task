@@ -2,6 +2,7 @@ import * as taskLib from 'vsts-task-lib';
 
 import { GCPServiceAccountConnection } from './gcp-service-account-connection';
 import { DockerTaskActions } from './docker-task-actions';
+import { GoogleContainerRegistries } from './google-container-registries';
 
 export class DockerTask {
 
@@ -30,9 +31,13 @@ export class DockerTask {
                 case DockerTaskActions.build:
                     this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
 
-                    let dockerPath = this.dockerFilePath.replace('Dockerfile', '');
+                    let fileTokens = this.dockerFilePath.split('/');
+                    let dockerFileName = fileTokens[fileTokens.length - 1];
+                    let dockerPath = this.dockerFilePath.replace(dockerFileName, '');
+
+                    console.log('docker file name: ' + dockerFileName);
                     console.log('docker build path: ' + dockerPath);
-                    console.log(this.googleContainerRegistry + '/' + this.gcpProjectId + '/' + this.imageName + ':' + this.imageTag);
+                    console.log(GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName + ':' + this.imageTag);
 
 
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.build + '\'');
