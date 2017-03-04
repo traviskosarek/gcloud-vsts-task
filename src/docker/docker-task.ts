@@ -15,12 +15,14 @@ export class DockerTask {
     private imageName: string;
     private imageTag: string;
     private useLatestTag: boolean;
+    private dockerImageName: string;
 
     public constructor() {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
         this.googleContainerRegistry = taskLib.getInput('gcpContainerRegistry', true);
         this.gcpProjectId = taskLib.getInput('gcpDockerProjectName', true);
         this.imageName = taskLib.getInput('gcpDockerImageName', true);
+        this.dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
         this.imageTag = taskLib.getInput('gcpDockerImageTag', true);
         this.useLatestTag = taskLib.getBoolInput('gcpDockerImageLatestTag', true);
     }
@@ -64,8 +66,7 @@ export class DockerTask {
         let fileTokens = this.dockerFilePath.split('/');
         let dockerFileName = fileTokens[fileTokens.length - 1];
         let dockerPath = this.dockerFilePath.replace(dockerFileName, '');
-        let dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
-
+        
         taskLib.tool('gcloud')
             .arg('docker')
             .arg('--')
@@ -73,34 +74,42 @@ export class DockerTask {
             .arg(dockerPath)
             .arg('--file')
             .arg(dockerFileName)
-            .arg('--tag')
-            .arg(dockerImageName + ':' + this.imageTag)
+            .argIf(!this.imageTag && !this.useLatestTag, '--tag')
+            .argIf(!this.imageTag && !this.useLatestTag, this.dockerImageName)
+            .argIf(this.imageTag, '--tag')
+            .argIf(this.imageTag, this.dockerImageName + ':' + this.imageTag)
             .argIf(this.useLatestTag, '--tag')
-            .argIf(this.useLatestTag, dockerImageName + ':latest')
+            .argIf(this.useLatestTag, this.dockerImageName + ':latest')
             .exec();
     }
 
     private dockerPush() {
+        if (!this.imageTag && !this.useLatestTag) {
+            taskLib.tool('gcloud')
+                .arg('docker')
+                .arg('--')
+                .arg('push')
+                .arg(this.dockerImageName)
+                .exec();
+        }
 
-        let dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
+        if (this.imageTag) {
+            taskLib.tool('gcloud')
+                .arg('docker')
+                .arg('--')
+                .arg('push')
+                .arg(this.dockerImageName + ':' + this.imageTag)
+                .exec();
+        }
 
-        taskLib.tool('gcloud')
-            .arg('docker')
-            .arg('--')
-            .arg('push')
-            .arg(dockerImageName)
-            .exec();
-        
-        // if (this.useLatestTag) {
-        //     taskLib.tool('gcloud')
-        //         .arg('docker')
-        //         .arg('--')
-        //         .arg('push')
-        //         .arg(dockerImageName + ':' + this.imageTag)
-        //         .argIf(this.useLatestTag, '--tag')
-        //         .argIf(this.useLatestTag, dockerImageName + ':latest')
-        //         .exec();
-        // }
+        if (this.useLatestTag) {
+            taskLib.tool('gcloud')
+                .arg('docker')
+                .arg('--')
+                .arg('push')
+                .arg(this.dockerImageName + ':' + this.imageTag)
+                .exec();
+        }
     }
 
     private onComplete() {
