@@ -31,14 +31,7 @@ export class DockerTask {
                 case DockerTaskActions.build:
                     this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
 
-                    let fileTokens = this.dockerFilePath.split('/');
-                    let dockerFileName = fileTokens[fileTokens.length - 1];
-                    let dockerPath = this.dockerFilePath.replace(dockerFileName, '');
-
-                    console.log('docker file name: ' + dockerFileName);
-                    console.log('docker build path: ' + dockerPath);
-                    console.log(GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName + ':' + this.imageTag);
-
+                    this.dockerBuild();
 
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.build + '\'');
                     break;
@@ -66,16 +59,27 @@ export class DockerTask {
     }
 
     private dockerBuild() {
-        // taskLib.which('gcloud', true);
-        // taskLib.which('docker', true);
+        // ensure that gcloud and docker exist prior to trying to build
+        taskLib.which('gcloud', true);
+        taskLib.which('docker', true);
 
-        // let command = taskLib.tool('gcloud')
-        //     .arg('docker')
-        //     .arg('--')
-        //     .arg('build');
-        // command.arg(this.serviceAccountId);
-        // command.arg('--key-file=' + this.keyFileName);
-        // command.execSync();
+        let fileTokens = this.dockerFilePath.split('/');
+        let dockerFileName = fileTokens[fileTokens.length - 1];
+        let dockerPath = this.dockerFilePath.replace(dockerFileName, '');
+        let dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
+
+        taskLib.tool('gcloud')
+            .arg('docker')
+            .arg('--')
+            .arg('build')
+            .arg(dockerPath)
+            .arg('--file')
+            .arg(dockerFileName)
+            .arg('--tag')
+            .arg(dockerImageName + ':' + this.imageTag)
+            .argIf(this.useLatestTag, '--tag')
+            .argIf(this.useLatestTag, dockerImageName + ':latest')
+            .execSync();
     }
 
     private onComplete() {
