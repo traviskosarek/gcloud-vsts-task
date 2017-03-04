@@ -1,8 +1,8 @@
 import * as taskLib from 'vsts-task-lib';
 
-import { GCPServiceAccountConnection } from './gcp-service-account-connection';
+import { GCPServiceAccountConnection } from '../gcp-service-account/gcp-service-account-connection';
+import { GoogleContainerRegistries } from '../container/google-container-registries';
 import { DockerTaskActions } from './docker-task-actions';
-import { GoogleContainerRegistries } from './google-container-registries';
 
 export class DockerTask {
 
