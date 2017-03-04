@@ -27,6 +27,10 @@ export class DockerTask {
 
     public run() {
         try {
+            // ensure that gcloud and docker exist prior to trying to build
+            taskLib.which('gcloud', true);
+            taskLib.which('docker', true);
+
             switch (this.action) {
                 case DockerTaskActions.build:
                     this.dockerFilePath = taskLib.getInput('dockerFilePath', true);
@@ -39,9 +43,7 @@ export class DockerTask {
                     this.gcpServiceAccountId = taskLib.getInput('serviceAccountAuthentication', false);
                     this.gcpServiceAccount = new GCPServiceAccountConnection(this.gcpServiceAccountId);
 
-
-
-
+                    this.dockerPush();
 
                     taskLib.setResult(taskLib.TaskResult.Succeeded, 'Completing \'' + DockerTaskActions.push + '\'');
                     break;
@@ -59,10 +61,6 @@ export class DockerTask {
     }
 
     private dockerBuild() {
-        // ensure that gcloud and docker exist prior to trying to build
-        taskLib.which('gcloud', true);
-        taskLib.which('docker', true);
-
         let fileTokens = this.dockerFilePath.split('/');
         let dockerFileName = fileTokens[fileTokens.length - 1];
         let dockerPath = this.dockerFilePath.replace(dockerFileName, '');
@@ -79,7 +77,30 @@ export class DockerTask {
             .arg(dockerImageName + ':' + this.imageTag)
             .argIf(this.useLatestTag, '--tag')
             .argIf(this.useLatestTag, dockerImageName + ':latest')
-            .execSync();
+            .exec();
+    }
+
+    private dockerPush() {
+
+        let dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
+
+        taskLib.tool('gcloud')
+            .arg('docker')
+            .arg('--')
+            .arg('push')
+            .arg(dockerImageName)
+            .exec();
+        
+        // if (this.useLatestTag) {
+        //     taskLib.tool('gcloud')
+        //         .arg('docker')
+        //         .arg('--')
+        //         .arg('push')
+        //         .arg(dockerImageName + ':' + this.imageTag)
+        //         .argIf(this.useLatestTag, '--tag')
+        //         .argIf(this.useLatestTag, dockerImageName + ':latest')
+        //         .exec();
+        // }
     }
 
     private onComplete() {
