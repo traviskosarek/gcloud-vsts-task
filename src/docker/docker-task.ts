@@ -107,7 +107,7 @@ export class DockerTask {
                 .arg('docker')
                 .arg('--')
                 .arg('push')
-                .arg(this.dockerImageName + ':' + this.imageTag)
+                .arg(this.dockerImageName + ':latest')
                 .exec();
         }
     }
