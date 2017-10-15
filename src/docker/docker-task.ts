@@ -20,7 +20,7 @@ export class DockerTask {
     public constructor() {
         this.action = taskLib.getInput('gcpDockerActionSelector', true);
         this.googleContainerRegistry = taskLib.getInput('gcpContainerRegistry', true);
-        this.gcpProjectId = taskLib.getInput('gcpDockerProjectName', true);
+        this.gcpProjectId = taskLib.getInput('gcpDockerProjectId', true);
         this.imageName = taskLib.getInput('gcpDockerImageName', true);
         this.dockerImageName = GoogleContainerRegistries.getRegistry(this.googleContainerRegistry) + '/' + this.gcpProjectId + '/' + this.imageName;
         this.imageTag = taskLib.getInput('gcpDockerImageTag', true);
